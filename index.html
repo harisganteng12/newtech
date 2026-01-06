@@ -34,7 +34,11 @@
                 <div class="left-col">
                     <div class="card" style="padding:0; overflow:hidden;">
                         <div style="position:relative; padding-bottom:56.25%; height:0;">
-                            <iframe style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+                            <iframe 
+                                style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" 
+                                src="https://www.youtube.com/embed/dQDYLnP1ixo?rel=0&modestbranding=1"
+                                allowfullscreen>
+                            </iframe>
                         </div>
                     </div>
                     <div class="card">
@@ -171,7 +175,6 @@
 <script>
 let walletConnected = false;
 
-// AUTH ENGINE
 function updateAuthUI() {
     const sidebarAuth = document.getElementById('auth-sidebar');
     const swapBtn = document.getElementById('swap-btn');
@@ -197,7 +200,6 @@ function toggleWallet() {
     updateAuthUI();
 }
 
-// NAVIGATION
 function nav(id, el) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -205,7 +207,6 @@ function nav(id, el) {
     el.classList.add('active');
 }
 
-// CHART
 const ctx = document.getElementById('mainChart').getContext('2d');
 let myChart = new Chart(ctx, {
     type: 'line',
@@ -231,7 +232,6 @@ function updateChartData(p) {
     myChart.update();
 }
 
-// RISK CALCULATOR ENGINE
 function focusNext(e, id) {
     if(e.key === 'Enter') { e.preventDefault(); document.getElementById(id).focus(); }
 }
@@ -239,44 +239,33 @@ function focusNext(e, id) {
 function calculate(e, type) {
     if(e.key === 'Enter') {
         if(type === 1) {
-            // Logic: Cost = Risk / (Lev * Move%)
             let m = parseFloat(document.getElementById('c1-m').value) || 0;
             let l = parseFloat(document.getElementById('c1-l').value) || 1;
             let v = parseFloat(document.getElementById('c1-v').value) || 0;
             let r = parseFloat(document.getElementById('c1-r').value) || 0;
-
             let cost = r / (l * (v / 100));
             let totalVal = cost * l;
             let slROI = v * l;
-
             document.getElementById('r1-cost').innerText = "$" + cost.toFixed(2);
             document.getElementById('r1-val').innerText = "$" + totalVal.toFixed(2);
             document.getElementById('r1-sl').innerText = "-" + slROI.toFixed(1) + "%";
             document.getElementById('r1-tp').innerText = "+" + (slROI * 2).toFixed(1) + "%";
             document.getElementById('r1-after').innerText = "$" + (m - r).toFixed(2);
-
         } else if(type === 2) {
-            // Logic: Lev = TargetROI% / Move%
             let margin = parseFloat(document.getElementById('c2-m').value) || 0;
             let targetROI = parseFloat(document.getElementById('c2-rt').value) || 0;
             let move = parseFloat(document.getElementById('c2-v').value) || 0;
-
             let neededLev = targetROI / move;
             let posVal = margin * neededLev;
-
             document.getElementById('r2-lev').innerText = neededLev.toFixed(2) + "x";
             document.getElementById('r2-val').innerText = "$" + posVal.toFixed(2);
             document.getElementById('r2-tp1').innerText = "+" + targetROI.toFixed(1) + "%";
             document.getElementById('r2-tp2').innerText = "+" + (targetROI * 2).toFixed(1) + "%";
             document.getElementById('r2-amt').innerText = "$" + (margin * (targetROI/100)).toFixed(2);
-
         } else {
-            // Logic: Lev = 1 / Vol%
             let margin = parseFloat(document.getElementById('c3-m').value) || 0;
             let vol = parseFloat(document.getElementById('c3-v').value) || 0;
-
             let optLev = 100 / vol;
-            
             document.getElementById('r3-lev').innerText = optLev.toFixed(2) + "x";
             document.getElementById('r3-val').innerText = "$" + (margin * optLev).toFixed(2);
             document.getElementById('r3-liq').innerText = "-" + vol.toFixed(1) + "%";
@@ -297,7 +286,6 @@ function flipTokens() {
     let tmp = f.innerText; f.innerText = t.innerText; t.innerText = tmp;
 }
 
-// Init
 updateAuthUI();
 </script>
 </body>
