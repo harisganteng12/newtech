@@ -1,0 +1,68 @@
+/* Journal Specific Styles */
+.journal-card {
+    border-top: 2px solid var(--accent);
+}
+
+.journal-run-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 15px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid var(--border) !important;
+}
+
+.run-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.run-pair {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--text-main);
+}
+
+.run-sub {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+}
+
+.run-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-win, .btn-lose {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+.btn-win { background: var(--success); color: white; }
+.btn-lose { background: var(--danger); color: white; }
+.btn-win:hover, .btn-lose:hover { filter: brightness(1.2); }
+
+.del-btn {
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.del-btn:hover {
+    color: var(--danger);
+}
+
+.table-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar for Journal */
+.table-scroll::-webkit-scrollbar { width: 5px; }
+.table-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
