@@ -2,153 +2,141 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Newtech Alpha | Pro Terminal</title>
+    <title>Newtech Alpha | Risk Engine</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<div class="layout">
-    <aside class="sidebar">
-        <div class="brand"><i class="fas fa-cube"></i> NEWTECH</div>
-        <ul class="nav-menu">
-            <li class="nav-item active" onclick="nav('dashboard', this)"><i class="fas fa-chart-line"></i> Analytics Hub</li>
-            <li class="nav-item" onclick="nav('swap', this)"><i class="fas fa-random"></i> Liquidity Swap</li>
-            <li class="nav-item" onclick="nav('risk', this)"><i class="fas fa-calculator"></i> Risk Calculator</li>
-            <li class="nav-item" onclick="nav('journal', this)"><i class="fas fa-book"></i> Trading Journal</li>
-        </ul>
-    </aside>
-
-    <main class="main-content">
-        <section id="risk" class="page active">
-            <h2 style="margin-bottom:25px;">Strategic Risk Engine</h2>
-            <div class="calc-grid">
-                
-                <div class="card">
-                    <div class="tag">SCALPING LOGIC</div>
-                    <h4>Limited Leverage</h4>
-                    <label>Total Wallet ($)</label><input type="number" id="c1-m" placeholder="Contoh: 1000" onkeydown="focusNext(event, 'c1-l')">
-                    <label>Leverage (x)</label><input type="number" id="c1-l" placeholder="10" onkeydown="focusNext(event, 'c1-v')">
-                    <label>Movement % (SL)</label><input type="number" id="c1-v" placeholder="1.5" onkeydown="focusNext(event, 'c1-r')">
-                    <label>Risk Target ($)</label><input type="number" id="c1-r" placeholder="20" onkeydown="calculate(event, 1)">
-                    
-                    <div class="res-container">
-                        <div class="res-line">Required Cost: <span class="res-val" id="r1-cost">$0.00</span></div>
-                        <div class="res-line">Cutloss ROI: <span class="res-val" style="color:var(--danger)" id="r1-sl">0%</span></div>
-                        <div class="res-line">Wallet After SL: <span class="res-val" id="r1-after">$0.00</span></div>
-                    </div>
-                    <button class="btn-reset" onclick="resetC(1)">Reset</button>
-                </div>
-
-                <div class="card">
-                    <div class="tag">ROI STRATEGY</div>
-                    <h4>ROI Based Risk</h4>
-                    <label>Margin ($)</label><input type="number" id="c2-m" placeholder="500" onkeydown="focusNext(event, 'c2-rt')">
-                    <label>Risk Target (% ROI)</label><input type="number" id="c2-rt" placeholder="5" onkeydown="focusNext(event, 'c2-v')">
-                    <label>Movement % (SL)</label><input type="number" id="c2-v" placeholder="2" onkeydown="calculate(event, 2)">
-                    
-                    <div class="res-container" style="margin-top:88px">
-                        <div class="res-line">Needed Leverage: <span class="res-val" id="r2-lev">0.00x</span></div>
-                        <div class="res-line">Risk Amount: <span class="res-val" style="color:var(--danger)" id="r2-amt">$0.00</span></div>
-                        <div class="res-line">Total Position: <span class="res-val" id="r2-val">$0.00</span></div>
-                    </div>
-                    <button class="btn-reset" onclick="resetC(2)">Reset</button>
-                </div>
-
-                <div class="card">
-                    <div class="tag">VOLATILITY ALPHA</div>
-                    <h4>Efficient Risk</h4>
-                    <label>Margin ($)</label><input type="number" id="c3-m" placeholder="1000" onkeydown="focusNext(event, 'c3-v')">
-                    <label>Volatility % (ATR)</label><input type="number" id="c3-v" placeholder="3.5" onkeydown="calculate(event, 3)">
-                    
-                    <div class="res-container" style="margin-top:162px">
-                        <div class="res-line">Optimal Leverage: <span class="res-val" id="r3-lev">0.00x</span></div>
-                        <div class="res-line">Liq. Point: <span class="res-val" style="color:var(--danger)" id="r3-liq">0%</span></div>
-                        <div class="res-line">Max Value: <span class="res-val" id="r3-val">$0.00</span></div>
-                    </div>
-                    <button class="btn-reset" onclick="resetC(3)">Reset</button>
-                </div>
-
+<div class="main-content">
+    <h2 style="margin-bottom:25px; color: #00d4ff;">Strategic Risk Engine</h2>
+    <div class="calc-grid">
+        
+        <div class="card">
+            <div class="tag">SCALPING LOGIC</div>
+            <h4>Limited Leverage</h4>
+            <p style="font-size:0.7rem; color:#7d8590; margin-bottom:15px;">Target resiko fix dengan leverage terbatas.</p>
+            
+            <label>Total Wallet ($)</label>
+            <input type="number" id="c1-m" placeholder="1000" onkeydown="focusNext(event, 'c1-l')">
+            
+            <label>Leverage (x)</label>
+            <input type="number" id="c1-l" placeholder="10" onkeydown="focusNext(event, 'c1-v')">
+            
+            <label>Movement % (SL)</label>
+            <input type="number" id="c1-v" placeholder="1.5" onkeydown="focusNext(event, 'c1-r')">
+            
+            <label>Risk Target ($)</label>
+            <input type="number" id="c1-r" placeholder="20" onkeydown="calculate(event, 1)">
+            
+            <div class="res-container">
+                <div class="res-line">Required Cost: <span class="res-val" id="r1-cost">$0.00</span></div>
+                <div class="res-line">Total Value (Lev x Cost): <span class="res-val" id="r1-total">$0.00</span></div>
+                <div class="res-line">Cutloss ROI: <span class="res-val" style="color:#da3633" id="r1-sl">0%</span></div>
+                <div class="res-line">Wallet After SL: <span class="res-val" id="r1-after">$0.00</span></div>
             </div>
-        </section>
+            <button class="btn-reset" onclick="resetC(1)">Reset</button>
+        </div>
 
-        <section id="dashboard" class="page"></section>
-        <section id="swap" class="page"></section>
-        <section id="journal" class="page"></section>
-    </main>
+        <div class="card">
+            <div class="tag">ROI STRATEGY</div>
+            <h4>ROI Based Risk</h4>
+            <p style="font-size:0.7rem; color:#7d8590; margin-bottom:15px;">Leverage disesuaikan target % resiko margin.</p>
+            
+            <label>Margin ($)</label>
+            <input type="number" id="c2-m" placeholder="500" onkeydown="focusNext(event, 'c2-rt')">
+            
+            <label>Risk Target (% ROI)</label>
+            <input type="number" id="c2-rt" placeholder="5" onkeydown="focusNext(event, 'c2-v')">
+            
+            <label>Movement % (SL)</label>
+            <input type="number" id="c2-v" placeholder="2" onkeydown="calculate(event, 2)">
+            
+            <div class="res-container" style="margin-top:88px">
+                <div class="res-line">Needed Leverage: <span class="res-val" id="r2-lev">0.00x</span></div>
+                <div class="res-line">Total Value (Lev x Cost): <span class="res-val" id="r2-total">$0.00</span></div>
+                <div class="res-line">Risk Amount: <span class="res-val" style="color:#da3633" id="r2-amt">$0.00</span></div>
+            </div>
+            <button class="btn-reset" onclick="resetC(2)">Reset</button>
+        </div>
+
+        <div class="card">
+            <div class="tag">VOLATILITY ALPHA</div>
+            <h4>Efficient Risk</h4>
+            <p style="font-size:0.7rem; color:#7d8590; margin-bottom:15px;">Leverage efisien berdasarkan volatilitas pasar.</p>
+            
+            <label>Margin ($)</label>
+            <input type="number" id="c3-m" placeholder="1000" onkeydown="focusNext(event, 'c3-v')">
+            
+            <label>Volatility % (ATR)</label>
+            <input type="number" id="c3-v" placeholder="3.5" onkeydown="calculate(event, 3)">
+            
+            <div class="res-container" style="margin-top:162px">
+                <div class="res-line">Optimal Leverage: <span class="res-val" id="r3-lev">0.00x</span></div>
+                <div class="res-line">Total Value (Lev x Cost): <span class="res-val" id="r3-total">$0.00</span></div>
+                <div class="res-line">Liq. Point: <span class="res-val" style="color:#da3633" id="r3-liq">0%</span></div>
+            </div>
+            <button class="btn-reset" onclick="resetC(3)">Reset</button>
+        </div>
+
+    </div>
 </div>
 
 <script>
-    // Navigasi
-    function nav(id, el) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        el.classList.add('active');
-    }
+function focusNext(e, id) {
+    if(e.key === 'Enter') { e.preventDefault(); document.getElementById(id).focus(); }
+}
 
-    // Input Focus Enter
-    function focusNext(e, id) {
-        if(e.key === 'Enter') { 
-            e.preventDefault(); 
-            document.getElementById(id).focus(); 
+function calculate(e, type) {
+    if(e.key === 'Enter') {
+        if(type === 1) {
+            let m = parseFloat(document.getElementById('c1-m').value) || 0;
+            let l = parseFloat(document.getElementById('c1-l').value) || 1;
+            let v = parseFloat(document.getElementById('c1-v').value) || 0;
+            let r = parseFloat(document.getElementById('c1-r').value) || 0;
+            
+            let cost = r / (l * (v / 100));
+            let total = l * cost;
+            
+            document.getElementById('r1-cost').innerText = "$" + cost.toFixed(2);
+            document.getElementById('r1-total').innerText = "$" + total.toFixed(2);
+            document.getElementById('r1-sl').innerText = "-" + (v * l).toFixed(1) + "%";
+            document.getElementById('r1-after').innerText = "$" + (m - r).toFixed(2);
+
+        } else if(type === 2) {
+            let margin = parseFloat(document.getElementById('c2-m').value) || 0;
+            let targetROI = parseFloat(document.getElementById('c2-rt').value) || 0;
+            let move = parseFloat(document.getElementById('c2-v').value) || 0;
+            
+            let lev = targetROI / move;
+            let total = margin * lev;
+            
+            document.getElementById('r2-lev').innerText = lev.toFixed(2) + "x";
+            document.getElementById('r2-total').innerText = "$" + total.toFixed(2);
+            document.getElementById('r2-amt').innerText = "$" + (margin * (targetROI/100)).toFixed(2);
+
+        } else if(type === 3) {
+            let margin = parseFloat(document.getElementById('c3-m').value) || 0;
+            let vol = parseFloat(document.getElementById('c3-v').value) || 0;
+            
+            let lev = 100 / vol;
+            let total = margin * lev;
+            
+            document.getElementById('r3-lev').innerText = lev.toFixed(2) + "x";
+            document.getElementById('r3-total').innerText = "$" + total.toFixed(2);
+            document.getElementById('r3-liq').innerText = "-" + vol.toFixed(1) + "%";
         }
     }
+}
 
-    // FUNGSI HITUNG UTAMA
-    function calculate(e, type) {
-        if(e.key === 'Enter') {
-            if(type === 1) {
-                let wallet = parseFloat(document.getElementById('c1-m').value) || 0;
-                let lev = parseFloat(document.getElementById('c1-l').value) || 1;
-                let move = parseFloat(document.getElementById('c1-v').value) || 0;
-                let risk = parseFloat(document.getElementById('c1-r').value) || 0;
-                
-                // Rumus: Required Cost = Risk / (Leverage * (Movement/100))
-                let cost = risk / (lev * (move / 100));
-                let cutlossROI = move * lev;
-                let walletAfter = wallet - risk;
-
-                document.getElementById('r1-cost').innerText = "$" + cost.toFixed(2);
-                document.getElementById('r1-sl').innerText = "-" + cutlossROI.toFixed(1) + "%";
-                document.getElementById('r1-after').innerText = "$" + walletAfter.toFixed(2);
-                
-            } else if(type === 2) {
-                let margin = parseFloat(document.getElementById('c2-m').value) || 0;
-                let targetROI = parseFloat(document.getElementById('c2-rt').value) || 0;
-                let move = parseFloat(document.getElementById('c2-v').value) || 0;
-                
-                let levNeeded = targetROI / move;
-                let riskAmt = margin * (targetROI / 100);
-                let posVal = margin * levNeeded;
-
-                document.getElementById('r2-lev').innerText = levNeeded.toFixed(2) + "x";
-                document.getElementById('r2-amt').innerText = "$" + riskAmt.toFixed(2);
-                document.getElementById('r2-val').innerText = "$" + posVal.toFixed(2);
-                
-            } else if(type === 3) {
-                let margin = parseFloat(document.getElementById('c3-m').value) || 0;
-                let vol = parseFloat(document.getElementById('c3-v').value) || 0;
-                
-                let optLev = 100 / vol;
-                let maxVal = margin * optLev;
-
-                document.getElementById('r3-lev').innerText = optLev.toFixed(2) + "x";
-                document.getElementById('r3-liq').innerText = "-" + vol.toFixed(1) + "%";
-                document.getElementById('r3-val').innerText = "$" + maxVal.toFixed(2);
-            }
-        }
-    }
-
-    function resetC(n) {
-        if(n === 1) {
-            ['c1-m','c1-l','c1-v','c1-r'].forEach(i => document.getElementById(i).value = "");
-            ['r1-cost','r1-sl','r1-after'].forEach(i => document.getElementById(i).innerText = (i.includes('sl') ? "0%" : "$0.00"));
-        }
-        // ... dst untuk reset 2 & 3
-    }
+function resetC(n) {
+    const ids = {
+        1: ['c1-m','c1-l','c1-v','c1-r'],
+        2: ['c2-m','c2-rt','c2-v'],
+        3: ['c3-m','c3-v']
+    };
+    ids[n].forEach(id => document.getElementById(id).value = "");
+}
 </script>
 </body>
 </html>
