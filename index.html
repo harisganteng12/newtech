@@ -61,20 +61,18 @@
         </div>
 
         <div class="card">
-            <div class="tag">VOLATILITY ALPHA</div>
-            <h4>Efficient Risk</h4>
-            <p style="font-size:0.7rem; color:#7d8590; margin-bottom:15px;">Leverage efisien berdasarkan volatilitas pasar.</p>
+            <div class="tag">RPT CALCULATOR</div>
+            <h4>Risk Per Trade</h4>
+            <p style="font-size:0.7rem; color:#7d8590; margin-bottom:15px;">Menghitung nilai RPT persentase sederhana.</p>
             
-            <label>Margin ($)</label>
-            <input type="number" id="c3-m" placeholder="1000" onkeydown="focusNext(event, 'c3-v')">
+            <label>Total ($)</label>
+            <input type="number" id="c3-m" placeholder="100" onkeydown="focusNext(event, 'c3-v')">
             
-            <label>Volatility % (ATR)</label>
-            <input type="number" id="c3-v" placeholder="3.5" onkeydown="calculate(event, 3)">
+            <label>Persentase (%)</label>
+            <input type="number" id="c3-v" placeholder="10" onkeydown="calculate(event, 3)">
             
             <div class="res-container" style="margin-top:162px">
-                <div class="res-line">Optimal Leverage: <span class="res-val" id="r3-lev">0.00x</span></div>
-                <div class="res-line">Total Value (Lev x Cost): <span class="res-val" id="r3-total">$0.00</span></div>
-                <div class="res-line">Liq. Point: <span class="res-val" style="color:#da3633" id="r3-liq">0%</span></div>
+                <div class="res-line">Nilai RPT: <span class="res-val" style="color:#da3633" id="r3-total">$0.00</span></div>
             </div>
             <button class="btn-reset" onclick="resetC(3)">Reset</button>
         </div>
@@ -116,15 +114,13 @@ function calculate(e, type) {
             document.getElementById('r2-amt').innerText = "$" + (margin * (targetROI/100)).toFixed(2);
 
         } else if(type === 3) {
-            let margin = parseFloat(document.getElementById('c3-m').value) || 0;
-            let vol = parseFloat(document.getElementById('c3-v').value) || 0;
+            // Rumus baru hanya untuk menghitung persentase RPT sederhana
+            let total = parseFloat(document.getElementById('c3-m').value) || 0;
+            let percent = parseFloat(document.getElementById('c3-v').value) || 0;
             
-            let lev = 100 / vol;
-            let total = margin * lev;
+            let rpt = total * (percent / 100);
             
-            document.getElementById('r3-lev').innerText = lev.toFixed(2) + "x";
-            document.getElementById('r3-total').innerText = "$" + total.toFixed(2);
-            document.getElementById('r3-liq').innerText = "-" + vol.toFixed(1) + "%";
+            document.getElementById('r3-total').innerText = "$" + rpt.toFixed(2);
         }
     }
 }
