@@ -39,23 +39,18 @@
         </div>
 
         <div class="card">
-            <div class="tag">ROI STRATEGY</div>
-            <h4>ROI Based Risk</h4>
-            <p style="font-size:0.7rem; color:#7d8590; margin-bottom:15px;">Leverage disesuaikan target % resiko margin.</p>
+            <div class="tag">FOREX STRATEGY</div>
+            <h4>Lot Calculator</h4>
+            <p style="font-size:0.7rem; color:#7d8590; margin-bottom:15px;">Menghitung ukuran lot forex berdasarkan risk dan poin.</p>
             
-            <label>Margin ($)</label>
-            <input type="number" id="c2-m" placeholder="500" onkeydown="focusNext(event, 'c2-rt')">
+            <label>Risk ($)</label>
+            <input type="number" id="c2-risk" placeholder="50" onkeydown="focusNext(event, 'c2-poin')">
             
-            <label>Risk Target (% ROI)</label>
-            <input type="number" id="c2-rt" placeholder="5" onkeydown="focusNext(event, 'c2-v')">
+            <label>Jumlah Poin</label>
+            <input type="number" id="c2-poin" placeholder="200" onkeydown="calculate(event, 2)">
             
-            <label>Movement % (SL)</label>
-            <input type="number" id="c2-v" placeholder="2" onkeydown="calculate(event, 2)">
-            
-            <div class="res-container" style="margin-top:88px">
-                <div class="res-line">Needed Leverage: <span class="res-val" id="r2-lev">0.00x</span></div>
-                <div class="res-line">Total Value (Lev x Cost): <span class="res-val" id="r2-total">$0.00</span></div>
-                <div class="res-line">Risk Amount: <span class="res-val" style="color:#da3633" id="r2-amt">$0.00</span></div>
+            <div class="res-container" style="margin-top:162px">
+                <div class="res-line">Lot Size: <span class="res-val" id="r2-lot">0.00</span></div>
             </div>
             <button class="btn-reset" onclick="resetC(2)">Reset</button>
         </div>
@@ -102,16 +97,13 @@ function calculate(e, type) {
             document.getElementById('r1-after').innerText = "$" + (m - r).toFixed(2);
 
         } else if(type === 2) {
-            let margin = parseFloat(document.getElementById('c2-m').value) || 0;
-            let targetROI = parseFloat(document.getElementById('c2-rt').value) || 0;
-            let move = parseFloat(document.getElementById('c2-v').value) || 0;
+            // Rumus hitung Lot Forex: Risk / Jumlah Poin
+            let risk = parseFloat(document.getElementById('c2-risk').value) || 0;
+            let poin = parseFloat(document.getElementById('c2-poin').value) || 0;
             
-            let lev = targetROI / move;
-            let total = margin * lev;
+            let lot = poin > 0 ? (risk / poin) : 0;
             
-            document.getElementById('r2-lev').innerText = lev.toFixed(2) + "x";
-            document.getElementById('r2-total').innerText = "$" + total.toFixed(2);
-            document.getElementById('r2-amt').innerText = "$" + (margin * (targetROI/100)).toFixed(2);
+            document.getElementById('r2-lot').innerText = lot.toFixed(2);
 
         } else if(type === 3) {
             // Rumus baru hanya untuk menghitung persentase RPT sederhana
@@ -128,7 +120,7 @@ function calculate(e, type) {
 function resetC(n) {
     const ids = {
         1: ['c1-m','c1-l','c1-v','c1-r'],
-        2: ['c2-m','c2-rt','c2-v'],
+        2: ['c2-risk','c2-poin'],
         3: ['c3-m','c3-v']
     };
     ids[n].forEach(id => document.getElementById(id).value = "");
